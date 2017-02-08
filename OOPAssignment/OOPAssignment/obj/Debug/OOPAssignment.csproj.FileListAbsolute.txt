@@ -16,3 +16,6 @@ C:\Users\jeffl\Desktop\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.pdb
 C:\Users\user\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.exe.config
 C:\Users\user\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.exe
 C:\Users\user\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.pdb
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.exe.config
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.exe
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.pdb
