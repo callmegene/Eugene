@@ -24,7 +24,7 @@ namespace OOPAssignment
         {
             {
                 double value = 0;
-                if (Screening.ScreeningType == "3D Movies")
+                if (Screening.ScreeningType == "3D")
                 {
                     if (Screening.ScreeningDateTime.DayOfWeek >= DayOfWeek.Monday && Screening.ScreeningDateTime.DayOfWeek <= DayOfWeek.Thursday)
                         if ((Screening.Movie.OpeningDateTime - Screening.ScreeningDateTime).TotalDays <= 7)
@@ -34,7 +34,7 @@ namespace OOPAssignment
                     else
                         value = 14.0;
                 }
-                else if (Screening.ScreeningType == "2D Movies")
+                else if (Screening.ScreeningType == "2D")
                 {
                     if (Screening.ScreeningDateTime.DayOfWeek >= DayOfWeek.Monday && Screening.ScreeningDateTime.DayOfWeek <= DayOfWeek.Thursday)
                         if ((Screening.Movie.OpeningDateTime - Screening.ScreeningDateTime).TotalDays <= 7)

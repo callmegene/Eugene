@@ -18,10 +18,9 @@ namespace OOPAssignment
             List<string> GenreList = new List<string>();
             List<Screening> ScreeningList = new List<Screening>();
             List<CinemaHall> CinemaList = new List<CinemaHall>();
-            List<Order> OrderList = new List<Order>();
             List<string> Ratingcmts = new List<string>();
             List<double> Rates = new List<double>();
-            initMovie(GenreList, MovieList,Ratingcmts,Rates);
+            initMovie(GenreList, MovieList, Ratingcmts, Rates);
             initCinemaHall(CinemaList);
             initScreening(ScreeningList, CinemaList, MovieList);
 
@@ -51,11 +50,11 @@ namespace OOPAssignment
                     }
                     else if (no == 5)
                     {
-                        Console.WriteLine("Option 5. Order Movie Tickets"); option5(GenreList, MovieList, CinemaList, ScreeningList, OrderList);
+                        Console.WriteLine("Option 5. Order Movie Tickets"); option5(GenreList, MovieList, CinemaList, ScreeningList);
                     }
                     else if (no == 6)
                     {
-                        Console.WriteLine("Option 6. Add Movie Rating"); option6(MovieList,GenreList);
+                        Console.WriteLine("Option 6. Add Movie Rating"); option6(MovieList, GenreList);
                     }
                     else if (no == 7)
                     {
@@ -69,12 +68,15 @@ namespace OOPAssignment
                     {
                         Console.WriteLine("Enter any exit to exit"); Console.ReadKey(); break;
                     }
-                    
+
                 }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please enter a valid value");
+                }                   
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine("Please input a valid value");
                     continue;
                 }
             }
@@ -89,18 +91,18 @@ namespace OOPAssignment
             Console.WriteLine("1. List all movies");
             Console.WriteLine("2. Add a movie screening session");
             Console.WriteLine("3. List movie screenings");
-            Console.WriteLine("4. Delete a movie screening session");            
+            Console.WriteLine("4. Delete a movie screening session");
             Console.WriteLine("5. Order movie ticket/s");
             Console.WriteLine("6  Add a movie rating");
             Console.WriteLine("7. View movie ratings and comments");
             Console.WriteLine("8. Recommend movies");
             Console.WriteLine("0. Exit");
-            Console.WriteLine("=================================");            
+            Console.WriteLine("=================================");
         }
         /**Creating of movie List**/
         static void initMovie(List<string> GenreList, List<Movie> MovieList, List<string> Ratingcmts, List<double> Rates)
-        {          
-            DateTime date = new DateTime(2016, 12, 29);             
+        {
+            DateTime date = new DateTime(2016, 12, 29);
             List<string> G1 = new List<string> { "Action", "Adventure" }; Movie m = new Movie("The Great Wall", 103, "NC16", date, G1, new List<string>(), new List<double>()); MovieList.Add(m);
 
             DateTime date1 = new DateTime(2016, 12, 15);
@@ -159,71 +161,71 @@ namespace OOPAssignment
         static void Option2(List<CinemaHall> CinemaList, List<Movie> MovieList, List<string> GenreList, List<Screening> ScreeningList)
         {
 
-                CinemaHall c;
-                Console.WriteLine("{0,-4}{1,-20}{2,-15}{3,-20}", "No", "Cinema Name", "Hall No", "Capacity");
-                for (int i = 0; i < CinemaList.Count; i++)
-                {
-                    c = CinemaList[i];
-                    Console.WriteLine("{0,-4}{1,-20}{2,-15}{3,-20}", (i + 1), c.Name, c.HallNo, c.Capacity);
-                }
-                Console.Write("Select a cinema hall: ");
-                int hallno = Convert.ToInt32(Console.ReadLine());
-                if (hallno > CinemaList.Count || hallno < 0)
-                {
-                    throw new Exception("\nHall number must be within index");
-                }
-                Option1(GenreList, MovieList);
-                Console.Write("Select a movie: ");
-                int movieno = Convert.ToInt32(Console.ReadLine());
-                if (movieno > MovieList.Count || movieno < 0)
-                {
-                    throw new Exception("\nMovie number must be within index");
-                }
-                Console.WriteLine("");
-                Console.Write("Select a screening type [2D/3D]:");
-                string screeningtype = Console.ReadLine();
-                if (screeningtype != "2D" && screeningtype != "3D")
-                {
-                    throw new Exception("\nScreening type must either be 2D or 3D");
-                }
-                Console.Write("Enter a screening date and time [e.g DD/MM/YYYY HH:MM]: ");
-                DateTime dat = Convert.ToDateTime(Console.ReadLine());
-                if (dat < MovieList[movieno - 1].OpeningDateTime)
-                {
-                    throw new Exception("\nUnable add screening: Date is before opening");
-                }
-                Movie m = MovieList[movieno - 1];
-                c = CinemaList[hallno - 1];
-                Screening s = new Screening(dat, screeningtype, c, m);
-                ScreeningList.Add(s);
-                Console.WriteLine("Movie Screening successfully created.");
+            CinemaHall c;
+            Console.WriteLine("{0,-4}{1,-20}{2,-15}{3,-20}", "No", "Cinema Name", "Hall No", "Capacity");
+            for (int i = 0; i < CinemaList.Count; i++)
+            {
+                c = CinemaList[i];
+                Console.WriteLine("{0,-4}{1,-20}{2,-15}{3,-20}", (i + 1), c.Name, c.HallNo, c.Capacity);
+            }
+            Console.Write("Select a cinema hall: ");
+            int hallno = Convert.ToInt32(Console.ReadLine());
+            if (hallno > CinemaList.Count || hallno < 0)
+            {
+                throw new Exception("\nHall number must be within index");
+            }
+            Option1(GenreList, MovieList);
+            Console.Write("Select a movie: ");
+            int movieno = Convert.ToInt32(Console.ReadLine());
+            if (movieno > MovieList.Count || movieno < 0)
+            {
+                throw new Exception("\nMovie number must be within index");
+            }
+            Console.WriteLine("");
+            Console.Write("Select a screening type [2D/3D]:");
+            string screeningtype = Console.ReadLine();
+            if (screeningtype != "2D" && screeningtype != "3D")
+            {
+                throw new Exception("\nScreening type must either be 2D or 3D");
+            }
+            Console.Write("Enter a screening date and time [e.g DD/MM/YYYY HH:MM]: ");
+            DateTime dat = Convert.ToDateTime(Console.ReadLine());
+            if (dat < MovieList[movieno - 1].OpeningDateTime)
+            {
+                throw new Exception("\nUnable add screening: Date is before opening");
+            }
+            Movie m = MovieList[movieno - 1];
+            c = CinemaList[hallno - 1];
+            Screening s = new Screening(dat, screeningtype, c, m);
+            ScreeningList.Add(s);
+            Console.WriteLine("Movie Screening successfully created.");
         }
         /**Option 3 method
          * List movie screenings**/
         static void option3(List<string> GenreList, List<Movie> MovieList, List<Screening> ScreeningList)
         {
-                Option1(GenreList, MovieList);
-                Console.Write("Select a movie: ");
-                int movieno = Convert.ToInt32(Console.ReadLine());
-                if (movieno > MovieList.Count || movieno < 0)
-                {
-                   throw new Exception("\nMovie number must be within index");
-                }
-            Console.WriteLine("\n");
-                Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", "Location", "Type", "Date/Time", "Seats remaining");
-            bool check = false;
-                for (int i = 0; i < ScreeningList.Count; i++)
-                {
-                    Screening s = ScreeningList[i];
-                    if (s.Movie.Title == MovieList[movieno - 1].Title)
-                    {
-                        Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", s.CinemaHall.Name, s.ScreeningType, s.ScreeningDateTime, s.CinemaHall.Capacity);
-                    check = true;
-                    }
-                }
-                if (check == false)
+            Option1(GenreList, MovieList);
+            Console.Write("Select a movie: ");
+            int movieno = Convert.ToInt32(Console.ReadLine());
+            if (movieno > MovieList.Count || movieno < 0)
             {
-                Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", "Nil","Nil","Nil","Nil","Nil");
+                throw new Exception("\nMovie number must be within index");
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", "Location", "Type", "Date/Time", "Seats remaining");
+            bool check = false;
+            for (int i = 0; i < ScreeningList.Count; i++)
+            {
+                Screening s = ScreeningList[i];
+                if (s.Movie.Title == MovieList[movieno - 1].Title)
+                {
+                    Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", s.CinemaHall.Name, s.ScreeningType, s.ScreeningDateTime, s.CinemaHall.Capacity);
+                    check = true;
+                }
+            }
+            if (check == false)
+            {
+                Console.WriteLine("{0,-13}{1,-10}{2,-25}{3,-17}", "Nil", "Nil", "Nil", "Nil", "Nil");
             }
         }
         /**Option 4 method
@@ -231,39 +233,39 @@ namespace OOPAssignment
         static void option4(List<Screening> ScreeningList)
         {
 
-                Console.WriteLine("");
-                Console.WriteLine("{0,-6}{1,-12}{2,-10}{3,-28}{4,-20}", "No", "Location", "Hall No", "Title", "Date/Time");
-                for (int i = 0; i < ScreeningList.Count; i++)
-                {
-                    Screening s = ScreeningList[i];
-                    if (s.SeatsRemaining == s.CinemaHall.Capacity)
-                    {
-                        Console.WriteLine("{0,-6}{1,-12}{2,-10}{3,-28}{4,-20}", s.ScreeningNo, s.CinemaHall.Name, s.CinemaHall.HallNo, s.Movie.Title, s.ScreeningDateTime);
-                    }
-                }
-                Console.Write("Enter a screening number to delete: ");
-                int delno = Convert.ToInt32(Console.ReadLine());
-                bool check = false;
-                for (int i = 0; i < ScreeningList.Count; i++)
-                {
-                    if (ScreeningList[i].ScreeningNo == delno)
-                    {
-                        ScreeningList.RemoveAt(i);
-                        Console.WriteLine("\nScreening deleted.");
-                        check = true;
-                    }
-                }
-            if (check == false)
+            Console.WriteLine("");
+            Console.WriteLine("{0,-6}{1,-12}{2,-10}{3,-28}{4,-20}", "No", "Location", "Hall No", "Title", "Date/Time");
+            for (int i = 0; i < ScreeningList.Count; i++)
             {
-                Console.WriteLine("Screening number is incorrect");
+                Screening s = ScreeningList[i];
+                if (s.SeatsRemaining == s.CinemaHall.Capacity)
+                {
+                    Console.WriteLine("{0,-6}{1,-12}{2,-10}{3,-28}{4,-20}", s.ScreeningNo, s.CinemaHall.Name, s.CinemaHall.HallNo, s.Movie.Title, s.ScreeningDateTime);
+                }
             }
+            Console.Write("Enter a screening number to delete: ");
+            int delno = Convert.ToInt32(Console.ReadLine());
+            bool check = false;
+            for (int i = 0; i < ScreeningList.Count; i++)
+            {
+                if (ScreeningList[i].ScreeningNo == delno)
+                {
+                    ScreeningList.RemoveAt(i);
+                    Console.WriteLine("\nScreening deleted.");
+                    check = true;
+                }
+            }
+            if (check == false)            
+                Console.WriteLine("Screening number is incorrect");            
         }
 
         /**Option 5 method
          * Order movie ticket**/
-        static void option5(List<string> GenreList, List<Movie> MovieList, List<CinemaHall> CinemaHallList, List<Screening> ScreeningList, List<Order> OrderList)
+        static void option5(List<string> GenreList, List<Movie> MovieList, List<CinemaHall> CinemaHallList, List<Screening> ScreeningList)
         {
+            Order ord = new Order();
             Screening s = null;
+            double total = 0;
             Option1(GenreList, MovieList);
             Console.Write("Select a movie : ");
             int movieno = Convert.ToInt32(Console.ReadLine());
@@ -312,72 +314,95 @@ namespace OOPAssignment
                 Console.Write("Please enter number of tickets you wish to purchase: ");
                 tickno = Convert.ToInt32(Console.ReadLine());
             }
-            if (MovieList[movieno - 1].classification == "M18")
+            if (MovieList[movieno - 1].classification == "M18" || MovieList[movieno - 1].classification == "NC16" || MovieList[movieno - 1].classification == "PG13" || MovieList[movieno - 1].classification == "R21")
             {
                 Console.Write("The movie classification is " + MovieList[movieno - 1].classification + ". Does every ticket holder meet the age requirements [Y/N]?");
             }
-            else if (MovieList[movieno - 1].classification == "NC16")
-            {
-                Console.Write("The movie classification is " + MovieList[movieno - 1].classification + ". Does every ticket holder meet the age requirements [Y/N]?");
-            }
-            else if (MovieList[movieno - 1].classification == "PG13")
-            {
-                Console.Write("The movie classification is " + MovieList[movieno - 1].classification + ". Does every ticket holder meet the age requirements [Y/N]?");
-            }
-
-            string req = Console.ReadLine();
-            double total = 0;
-            Order Ticket = new Order();
-            Ticket.status = "Unpaid";
+            string req = Console.ReadLine();            
+            string ticktype = "";
+            ord.status = "Unpaid";
             if (req == "Y" || req == "y" || MovieList[movieno - 1].classification == "G")
             {
 
                 for (int i = 1; i <= tickno; i++)
                 {
                     Console.WriteLine("Ticket #" + i);
-                    Console.Write("Type of ticket to purchase [Student/Senior/Adult] : ");
-                    string ticktype = Console.ReadLine();
-
-
+                    bool checktype = false;
+                    while (checktype == false)
+                    {                        
+                        Console.Write("Type of ticket to purchase [Student/Senior/Adult] : ");
+                        ticktype = Console.ReadLine();
+                        if (ticktype == "senior" || ticktype == "Senior" || ticktype == "adult" || ticktype == "Adult" || ticktype == "student" || ticktype == "Student")
+                            checktype = true;
+                        else
+                            Console.WriteLine("Incorrect input, please try again");
+                    }
                     if (ticktype == "Senior" || ticktype == "senior")
                     {
-                        Console.Write("Please enter year of birth [YYYY]: ");
-                        int year = Convert.ToInt32(Console.ReadLine());
-                        if ((DateTime.Now.Year - year) >= 50)
+                        bool checkage = false;
+                        while (checkage == false)
+                            
                         {
-                            Ticket tick = (new SeniorCitizen(ScreeningList[sessionno - 1001], year));
-                            Console.WriteLine("Ticket #" + i + " ordered successfully.");
-                            total = total + tick.CalculatePrice();
-
+                            Console.Write("Please enter year of birth [YYYY]: ");
+                            int year = Convert.ToInt32(Console.ReadLine());
+                            if ((DateTime.Now.Year - year) >= 55)
+                            {
+                                Ticket tick = new SeniorCitizen(ScreeningList[sessionno - 1001], year);                                
+                                Console.WriteLine("Ticket #" + i + " ordered successfully.");
+                                total += tick.CalculatePrice();
+                                checkage = true;
+                            }
+                            else                            
+                                Console.WriteLine("Senior citizen age must be 55 and above, please try again");                                           
                         }
                     }
                     else if (ticktype == "Student" || ticktype == "student")
                     {
-                        Console.Write("Please enter level of study [Primary/Secondary/tertiary]: ");
-                        string level = Console.ReadLine();
+                        string level = "";
+                        bool checklevel = false;
+                        while (checklevel == false)
+                        {
+                            Console.Write("Please enter level of study [Primary/Secondary/tertiary]: ");
+                            level = Console.ReadLine();
+                            if (level == "primary" || level == "Primary" || level == "secondary" || level == "Secondary" || level == "tertiary" || level == "Tertiary")
+                                checklevel = true;
+                            else
+                                Console.WriteLine("Incorrect input, please try again");
+                        }
                         Ticket tick = (new Student(ScreeningList[sessionno - 1001], level));
                         Console.WriteLine("Ticket #" + i + " ordered successfully.");
-                        total = total + tick.CalculatePrice();
+                        total += tick.CalculatePrice();
                     }
                     else if (ticktype == "Adult" || ticktype == "adult")
                     {
-                        Console.Write("Do you want to buy popcorn for $3? [Y/N]");
-                        string popcorn = Console.ReadLine();
-                        if (popcorn == "Y" || popcorn == "y")
+                        bool popcornstring = false;
+                        while (popcornstring == false)
                         {
+                            Console.Write("Do you want to buy popcorn for $3? [Y/N]");
+                            string popcorn = Console.ReadLine();
+                            if (popcorn == "Y" || popcorn == "y")
+                            {
 
-                            Ticket tick = (new Adult(ScreeningList[sessionno - 1001], true));
-                            Console.WriteLine("Ticket #" + i + " ordered successfully.");
-                            total = total + (tick.CalculatePrice() + 3);
-                        }
-                        else if (popcorn == "N" || popcorn == "n")
-                        {
-                            Ticket tick = (new Adult(ScreeningList[sessionno - 1001], false));
-                            Console.WriteLine("Ticket #" + i + " ordered successfully.");
-                            total = total + tick.CalculatePrice();
-                        }
-                    }
+                                Ticket tick = (new Adult(ScreeningList[sessionno - 1001], true));
+                                Console.WriteLine("Ticket #" + i + " ordered successfully.");
+                                total += ((tick.CalculatePrice() + 3));
+                                popcornstring = true;
+                            }
+                            else if (popcorn == "N" || popcorn == "n")
+                            {
+                                Ticket tick = (new Adult(ScreeningList[sessionno - 1001], false));
+                                Console.WriteLine("Ticket #" + i + " ordered successfully.");
+                                total += tick.CalculatePrice();
+                                popcornstring = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter either Y or N");
+                            }
+                        }                     
+                    }                   
                     s.SeatsRemaining -= 1;
+                    ord.Amount = total;
                 }
                 Console.WriteLine("Order #" + Order.OrderCount);
                 Console.WriteLine("==========");
@@ -385,13 +410,15 @@ namespace OOPAssignment
                 Console.WriteLine("Cinema : " + s.CinemaHall.Name);
                 Console.WriteLine("Hall : " + s.CinemaHall.HallNo);
                 Console.WriteLine("Date/Time : " + s.ScreeningDateTime);
-                Console.WriteLine("Total : $" + total);
+                Console.WriteLine("Total : $" + ord.Amount);
                 Console.WriteLine("==========");
                 Console.WriteLine("Press any key to make payment");
                 Console.ReadKey();
-                Ticket.status = "Paid";
+                ord.status = "Paid";
                 Console.WriteLine("Thanks you for visiting Singa Cineplexes. Have a great movie!");
             }
+            else            
+                throw new Exception("Sorry, the ticket holder must meet the age requirement.");            
         }
         /**Option 6 method
          * Add movie rating**/

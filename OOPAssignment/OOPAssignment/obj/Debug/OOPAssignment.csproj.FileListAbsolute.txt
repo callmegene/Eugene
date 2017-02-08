@@ -19,3 +19,6 @@ C:\Users\user\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPA
 C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.exe.config
 C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.exe
 C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.pdb
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.exe
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\bin\Debug\OOPAssignment.pdb
+C:\Users\jeffl\OneDrive\Documents\GitHub\Eugene\OOPAssignment\OOPAssignment\obj\Debug\OOPAssignment.csprojResolveAssemblyReference.cache
