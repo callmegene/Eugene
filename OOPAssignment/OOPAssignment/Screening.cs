@@ -13,7 +13,7 @@ namespace OOPAssignment
     class Screening
     {
         private static int ScreeningCount = 1001;
-        public int ScreeningNo { get; set; }
+        public string ScreeningNo { get; set; }
         public DateTime ScreeningDateTime { get; set; }
         public string ScreeningType { get; set; }
         public int SeatsRemaining { get; set; }
@@ -23,7 +23,7 @@ namespace OOPAssignment
         public Screening(){}
         public Screening(DateTime d,string s, CinemaHall c,Movie m)
         {
-            ScreeningNo = ScreeningCount;
+            ScreeningNo = Convert.ToString(ScreeningCount);
             ScreeningCount++;
             SeatsRemaining = c.Capacity;
             ScreeningDateTime = d;

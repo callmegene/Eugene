@@ -73,7 +73,7 @@ namespace OOPAssignment
                 catch (FormatException)
                 {
                     Console.WriteLine("Please enter a valid value");
-                }                   
+                }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -244,7 +244,7 @@ namespace OOPAssignment
                 }
             }
             Console.Write("Enter a screening number to delete: ");
-            int delno = Convert.ToInt32(Console.ReadLine());
+            string delno = Console.ReadLine();
             bool check = false;
             for (int i = 0; i < ScreeningList.Count; i++)
             {
@@ -255,8 +255,8 @@ namespace OOPAssignment
                     check = true;
                 }
             }
-            if (check == false)            
-                Console.WriteLine("Screening number is incorrect");            
+            if (check == false)
+                Console.WriteLine("Screening number is incorrect");
         }
 
         /**Option 5 method
@@ -287,7 +287,7 @@ namespace OOPAssignment
                 for (int i = 0; i < ScreeningList.Count; i++)
                 {
                     s = ScreeningList[i];
-                    if (s.ScreeningNo == sessionno)
+                    if (s.ScreeningNo == Convert.ToString(sessionno))
                     {
                         s = ScreeningList[i];
                         break;
@@ -318,7 +318,7 @@ namespace OOPAssignment
             {
                 Console.Write("The movie classification is " + MovieList[movieno - 1].classification + ". Does every ticket holder meet the age requirements [Y/N]?");
             }
-            string req = Console.ReadLine();            
+            string req = Console.ReadLine();
             string ticktype = "";
             ord.status = "Unpaid";
             if (req == "Y" || req == "y" || MovieList[movieno - 1].classification == "G")
@@ -329,7 +329,7 @@ namespace OOPAssignment
                     Console.WriteLine("Ticket #" + i);
                     bool checktype = false;
                     while (checktype == false)
-                    {                        
+                    {
                         Console.Write("Type of ticket to purchase [Student/Senior/Adult] : ");
                         ticktype = Console.ReadLine();
                         if (ticktype == "senior" || ticktype == "Senior" || ticktype == "adult" || ticktype == "Adult" || ticktype == "student" || ticktype == "Student")
@@ -341,19 +341,18 @@ namespace OOPAssignment
                     {
                         bool checkage = false;
                         while (checkage == false)
-                            
                         {
                             Console.Write("Please enter year of birth [YYYY]: ");
                             int year = Convert.ToInt32(Console.ReadLine());
                             if ((DateTime.Now.Year - year) >= 55)
                             {
-                                Ticket tick = new SeniorCitizen(ScreeningList[sessionno - 1001], year);                                
+                                Ticket tick = new SeniorCitizen(ScreeningList[sessionno - 1001], year);
                                 Console.WriteLine("Ticket #" + i + " ordered successfully.");
                                 total += tick.CalculatePrice();
                                 checkage = true;
                             }
-                            else                            
-                                Console.WriteLine("Senior citizen age must be 55 and above, please try again");                                           
+                            else
+                                Console.WriteLine("Senior citizen age must be 55 and above, please try again");
                         }
                     }
                     else if (ticktype == "Student" || ticktype == "student")
@@ -399,8 +398,8 @@ namespace OOPAssignment
                             {
                                 Console.WriteLine("Please enter either Y or N");
                             }
-                        }                     
-                    }                   
+                        }
+                    }
                     s.SeatsRemaining -= 1;
                     ord.Amount = total;
                 }
@@ -417,17 +416,17 @@ namespace OOPAssignment
                 ord.status = "Paid";
                 Console.WriteLine("Thanks you for visiting Singa Cineplexes. Have a great movie!");
             }
-            else            
-                throw new Exception("Sorry, the ticket holder must meet the age requirement.");            
+            else
+                throw new Exception("Sorry, the ticket holder must meet the age requirement.");
         }
         /**Option 6 method
          * Add movie rating**/
-        static void option6(List<Movie>MovieList, List<string>GenreList)
-        {            
+        static void option6(List<Movie> MovieList, List<string> GenreList)
+        {
             Option1(GenreList, MovieList);
             Console.Write("\nEnter movie number to review the movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
-            Movie m = MovieList[movieno-1];
+            Movie m = MovieList[movieno - 1];
             double total = 0;
             for (int i = 0; i < m.Rates.Count; i++)
             {
@@ -438,7 +437,7 @@ namespace OOPAssignment
             if (m.Rates.Count > 0)
             {
                 avg = total / m.Rates.Count;
-                Console.WriteLine("The current rating for " + m.Title + " is {0:.00}" , avg);
+                Console.WriteLine("The current rating for " + m.Title + " is {0:.00}", avg);
             }
             else
                 Console.WriteLine("The current rating for " + m.Title + " is " + avg);
@@ -486,8 +485,8 @@ namespace OOPAssignment
                 }
                 double avg = (total / m.Rates.Count);
                 Console.WriteLine("\nThe rating for " + m.Title + " is {0:.00}", avg);
-                for (int i = 0; i < m.Ratingcmts.Count; i++)                    
-                    Console.WriteLine("Comment #" + (i + 1) + " " + m.Ratingcmts[i]);                                    
+                for (int i = 0; i < m.Ratingcmts.Count; i++)
+                    Console.WriteLine("Comment #" + (i + 1) + " " + m.Ratingcmts[i]);
             }
             else
                 Console.WriteLine("\nThere are no ratings or comments for " + m.Title + " yet.");
@@ -496,32 +495,18 @@ namespace OOPAssignment
          * Recommend a movie(e.g, based on rating, genre, classification, price**/
         static void option8(List<string> GenreList, List<Movie> MovieList, List<string> Ratingcmts, List<double> Rates)
         {
-            Option1(GenreList, MovieList);
-            Console.Write("Please choose a movie for us to recommend :");
-            int num = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("How would you like us to recommend based on : ");
-            Console.WriteLine("[1] Rating");
-            Console.WriteLine("[2] Genre");
-            Console.WriteLine("[3] Classification");
-            Console.Write("Answer : ");
-            int recno = Convert.ToInt32(Console.ReadLine());
-            
-            double number = 0;
-            double highest = 0;
-            if (recno == 1)
-            {
-                for(int i = 0; i < Rates.Count; i++)
-                {
-                    if(Rates[i] > number)
-                    {
-                        highest = number;
-                       
-                    }
-
-                }
+            while (true)
+            {               
+                Console.WriteLine("\nRecommandations menu\n");
+                Console.WriteLine("[1] Recommand me a movie by ratings.");
+                Console.WriteLine("[2] Recommand me a movie by genre with the highest ratings.");
+                Console.WriteLine("[3] Recommand me a movie by classification.");
+                Console.WriteLine("[4] Recommand me a movie by location");
+                Console.WriteLine("[0] Exit recommandations menu");
+                Console.WriteLine("\nChoose an option");
+                int no = Convert.ToInt32(Console.ReadLine());
                 
-                Console.WriteLine(highest);
             }
-        }        
-    }
+        }
+    }            
 }
