@@ -14,6 +14,7 @@ namespace OOPAssignment
     {
         static void Main(string[] args)
         {
+            //The creation of all list in the main program
             List<Movie> MovieList = new List<Movie>();
             List<string> GenreList = new List<string>();
             List<Screening> ScreeningList = new List<Screening>();
@@ -31,9 +32,11 @@ namespace OOPAssignment
                 /**Exception handling**/
                 try
                 {
+                    //Calling individual methods with a condtion
                     Console.WriteLine("");
                     Menu();
                     Console.WriteLine("");
+                    //Prompts the user for a option number
                     Console.Write("Enter option: ");
                     int no = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("");
@@ -73,6 +76,7 @@ namespace OOPAssignment
                 }
                 catch (Exception ex)
                 {
+                    //The message that will be displayed after an invalid value is input
                     Console.WriteLine(ex.Message);
                     Console.WriteLine("Please input a valid value");
                     continue;
@@ -166,6 +170,7 @@ namespace OOPAssignment
                     c = CinemaList[i];
                     Console.WriteLine("{0,-4}{1,-20}{2,-15}{3,-20}", (i + 1), c.Name, c.HallNo, c.Capacity);
                 }
+                //Prompts the user for the cinema hall number
                 Console.Write("Select a cinema hall: ");
                 int hallno = Convert.ToInt32(Console.ReadLine());
                 if (hallno > CinemaList.Count || hallno < 0)
@@ -173,6 +178,7 @@ namespace OOPAssignment
                     throw new Exception("\nHall number must be within index");
                 }
                 Option1(GenreList, MovieList);
+                //Prompts the user for the movie number
                 Console.Write("Select a movie: ");
                 int movieno = Convert.ToInt32(Console.ReadLine());
                 if (movieno > MovieList.Count || movieno < 0)
@@ -180,12 +186,14 @@ namespace OOPAssignment
                     throw new Exception("\nMovie number must be within index");
                 }
                 Console.WriteLine("");
+                //Prompts user for a screening type
                 Console.Write("Select a screening type [2D/3D]:");
                 string screeningtype = Console.ReadLine();
                 if (screeningtype != "2D" && screeningtype != "3D")
                 {
                     throw new Exception("\nScreening type must either be 2D or 3D");
                 }
+                //Prompts user for a screening date and time
                 Console.Write("Enter a screening date and time [e.g DD/MM/YYYY HH:MM]: ");
                 DateTime dat = Convert.ToDateTime(Console.ReadLine());
                 if (dat < MovieList[movieno - 1].OpeningDateTime)
@@ -196,6 +204,7 @@ namespace OOPAssignment
                 c = CinemaList[hallno - 1];
                 Screening s = new Screening(dat, screeningtype, c, m);
                 ScreeningList.Add(s);
+                //Displays if movie screening is successfully created
                 Console.WriteLine("Movie Screening successfully created.");
         }
         /**Option 3 method
@@ -203,6 +212,7 @@ namespace OOPAssignment
         static void option3(List<string> GenreList, List<Movie> MovieList, List<Screening> ScreeningList)
         {
                 Option1(GenreList, MovieList);
+                //prompts user for movie number
                 Console.Write("Select a movie: ");
                 int movieno = Convert.ToInt32(Console.ReadLine());
                 if (movieno > MovieList.Count || movieno < 0)
@@ -241,6 +251,7 @@ namespace OOPAssignment
                         Console.WriteLine("{0,-6}{1,-12}{2,-10}{3,-28}{4,-20}", s.ScreeningNo, s.CinemaHall.Name, s.CinemaHall.HallNo, s.Movie.Title, s.ScreeningDateTime);
                     }
                 }
+                //prompts user for the screening number to be deleted
                 Console.Write("Enter a screening number to delete: ");
                 int delno = Convert.ToInt32(Console.ReadLine());
                 bool check = false;
@@ -265,6 +276,7 @@ namespace OOPAssignment
         {
             Screening s = null;
             Option1(GenreList, MovieList);
+            //prompts user for a movie number
             Console.Write("Select a movie : ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", "No", "Location", "Hall No", "Date/Time", "Seats Remaining");
@@ -280,6 +292,7 @@ namespace OOPAssignment
             bool check = false;
             while (check == false)
             {
+                //prompts user for a session number
                 Console.Write("Select a session : ");
                 sessionno = Convert.ToInt32(Console.ReadLine());
                 for (int i = 0; i < ScreeningList.Count; i++)
@@ -304,14 +317,17 @@ namespace OOPAssignment
                 if (check == false)
                     Console.WriteLine("Invalid screening in select movie, please try again");
             }
+            //prompts user for the number of tickets to be purchased
             Console.Write("Please enter number of tickets you wish to purchase: ");
             int tickno = Convert.ToInt32(Console.ReadLine());
+            //This condition will run only when the input is more than the cinema hall capacity
             while (tickno > s.CinemaHall.Capacity)
             {
                 Console.WriteLine("Ticket number is more than seats remainding, please try again");
                 Console.Write("Please enter number of tickets you wish to purchase: ");
                 tickno = Convert.ToInt32(Console.ReadLine());
             }
+            //Displays the respective output if the movie classification fits the condition
             if (MovieList[movieno - 1].classification == "M18")
             {
                 Console.Write("The movie classification is " + MovieList[movieno - 1].classification + ". Does every ticket holder meet the age requirements [Y/N]?");
@@ -327,6 +343,7 @@ namespace OOPAssignment
 
             string req = Console.ReadLine();
             double total = 0;
+            //Create an order list
             Order Ticket = new Order();
             Ticket.status = "Unpaid";
             if (req == "Y" || req == "y" || MovieList[movieno - 1].classification == "G")
@@ -335,12 +352,14 @@ namespace OOPAssignment
                 for (int i = 1; i <= tickno; i++)
                 {
                     Console.WriteLine("Ticket #" + i);
+                    //prompts user to enter student/senior/adult
                     Console.Write("Type of ticket to purchase [Student/Senior/Adult] : ");
                     string ticktype = Console.ReadLine();
 
 
                     if (ticktype == "Senior" || ticktype == "senior")
                     {
+                        //prompts user to enter year of birth
                         Console.Write("Please enter year of birth [YYYY]: ");
                         int year = Convert.ToInt32(Console.ReadLine());
                         if ((DateTime.Now.Year - year) >= 50)
@@ -353,6 +372,7 @@ namespace OOPAssignment
                     }
                     else if (ticktype == "Student" || ticktype == "student")
                     {
+                        //prompts user to enter primary/secondary/tertiary
                         Console.Write("Please enter level of study [Primary/Secondary/tertiary]: ");
                         string level = Console.ReadLine();
                         Ticket tick = (new Student(ScreeningList[sessionno - 1001], level));
@@ -361,11 +381,12 @@ namespace OOPAssignment
                     }
                     else if (ticktype == "Adult" || ticktype == "adult")
                     {
+                        //prompts if the user wants to buy popcorn
                         Console.Write("Do you want to buy popcorn for $3? [Y/N]");
                         string popcorn = Console.ReadLine();
                         if (popcorn == "Y" || popcorn == "y")
                         {
-
+                            
                             Ticket tick = (new Adult(ScreeningList[sessionno - 1001], true));
                             Console.WriteLine("Ticket #" + i + " ordered successfully.");
                             total = total + (tick.CalculatePrice() + 3);
@@ -398,6 +419,7 @@ namespace OOPAssignment
         static void option6(List<Movie>MovieList, List<string>GenreList)
         {            
             Option1(GenreList, MovieList);
+            //prompts user for the movie number to review the movie
             Console.Write("\nEnter movie number to review the movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Movie m = MovieList[movieno-1];
@@ -419,6 +441,7 @@ namespace OOPAssignment
             int rate = 0;
             while (check == false)
             {
+                //prompts user for the rating
                 Console.Write("\nPlease enter a rating [0=Very bad; 5=Very good]: ");
                 rate = Convert.ToInt32(Console.ReadLine());
                 if (rate >= 0 && rate <= 5)
@@ -427,9 +450,11 @@ namespace OOPAssignment
                     break;
                 }
                 else
+                    //prompts user to enter a valid value
                     Console.WriteLine("Please enter a valid value between 0 and 5");
             }
             m.Rates.Add(rate);
+            //prompts user for the comments about the movie
             Console.Write("Please enter comments about the movie: ");
             string ratingcomment = Console.ReadLine();
             m.Ratingcmts.Add(ratingcomment);
@@ -447,6 +472,7 @@ namespace OOPAssignment
         static void option7(List<Movie> MovieList, List<string> GenreList)
         {
             Option1(GenreList, MovieList);
+            //prompts user for the movie number
             Console.Write("Select a movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Movie m = MovieList[movieno - 1];
