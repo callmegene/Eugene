@@ -13,7 +13,7 @@ namespace OOPAssignment
     class Order
     {
         static public int OrderCount = 1;
-        public int OrderNo { get; set; }
+        public string OrderNo { get; set; }
         public DateTime OrderDateTime { get; set; }
         public double Amount { get; set; }
         public string status { get; set; }
@@ -21,7 +21,7 @@ namespace OOPAssignment
 
         public Order()
         {
-            OrderNo = OrderCount;
+            OrderNo = Convert.ToString(OrderCount);
             OrderCount++;
         }
         public void AddTicket(Ticket t)

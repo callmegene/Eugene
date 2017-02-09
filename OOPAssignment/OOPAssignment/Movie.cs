@@ -34,5 +34,9 @@ namespace OOPAssignment
 
         public List<string> GetGenreList()
         { return GenreList; }
+        public List<double> GetRateList()
+        { return Rates; }
+        public List<string> GetRatingCmts()
+        { return Ratingcmts; }
     }
 }
