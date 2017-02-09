@@ -517,6 +517,8 @@ namespace OOPAssignment
             double average;
             double highest = 0;
             int value = -1;
+            int count = 0;
+            List<string> movieswithsamerating = new List<string>();
             for (int i = 0; i < MovieList.Count; i++)
             {
                 Movie m = MovieList[i];
@@ -525,12 +527,24 @@ namespace OOPAssignment
                 {
                     highest = average;
                     value = i;
-                }               
+                }                             
+            }
+            for (int i = 0; i < MovieList.Count; i++)
+            {
+                Movie m = MovieList[i];
+                average = (m.GetRateList().Sum() / m.GetRateList().Count);
+                if (average == highest)
+                {
+                    count += 1;
+                    movieswithsamerating.Add(m.Title);
+                }
             }
             if (value == -1)
                 Console.WriteLine("Sorry, none of the movie has a rating yet");
+            else if (count > 1)
+                Console.WriteLine("The movies with the highest rating is " + string.Join(" and ", movieswithsamerating) + " with a rating of " + highest + ".");            
             else
-                Console.WriteLine("The movie with the highest rating is " + MovieList[value].Title + " with a rating of " +highest+"." );                
+                Console.WriteLine("The movie with the highest rating is " + MovieList[value].Title + " with a rating of " + highest + ".");                
         }
         static void option82(List<Movie> MovieList)
         {
