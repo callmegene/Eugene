@@ -262,18 +262,27 @@ namespace OOPAssignment
         {
             Order ord = new Order();
             Screening s = null;
+            bool checkin = false;
             double total = 0;
             Option1(MovieList);
             Console.Write("Select a movie : ");
             int movieno = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", "No", "Location", "Hall No", "Date/Time", "Seats Remaining");
             for (int i = 0; i < ScreeningList.Count; i++)
             {
                 if (ScreeningList[i].Movie.Title == MovieList[movieno - 1].Title)
                 {
                     s = ScreeningList[i];
-                    Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", s.ScreeningNo, s.CinemaHall.Name, s.CinemaHall.HallNo, s.ScreeningDateTime, s.SeatsRemaining);
+                    checkin = true;
                 }
+            }
+            if (checkin == false)
+            {
+                throw new Exception("There are no sessions in this this movie screening");
+            }
+            else
+            {
+                Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", "No", "Location", "Hall No", "Date/Time", "Seats Remaining");
+                Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", s.ScreeningNo, s.CinemaHall.Name, s.CinemaHall.HallNo, s.ScreeningDateTime, s.SeatsRemaining);
             }
             int sessionno = 0;
             bool check = false;
@@ -501,15 +510,18 @@ namespace OOPAssignment
                 Console.WriteLine("[1] Recommand me a movie by ratings.");
                 Console.WriteLine("[2] Recommand me a movie by genre.");
                 Console.WriteLine("[3] Recommand me a movie by classification.");
-                Console.WriteLine("[4] Recommand me a movie by location");
-                Console.WriteLine("[5] Take a look at people's comments on the movie");
+                Console.WriteLine("[4] Take a look at people's comment on the movie");
                 Console.WriteLine("[0] Exit recommandations menu");
                 Console.Write("\nChoose an option: ");
                 int no = Convert.ToInt32(Console.ReadLine());
                 if (no == 1)
-                { Console.WriteLine("\nRecommand a movie by rating selected"); option81(MovieList); }
+                { Console.WriteLine("\nRecommand a movie by rating selected."); option81(MovieList); }
                 else if (no == 2)
-                { Console.WriteLine("\nRecommand a movie by genre with the higher rating"); option82(MovieList); }
+                { Console.WriteLine("\nRecommand a movie by genre with the higher rating."); option82(MovieList); }
+                else if (no == 3)
+                { Console.WriteLine("\nRecommand a movie by classification selected."); option83(MovieList); }
+                else if (no == 4)
+                { Console.WriteLine("\nTake a look at people's comment on the movie selected."); option84(MovieList); }
             }
         }
         static void option81(List<Movie>MovieList)
@@ -569,12 +581,29 @@ namespace OOPAssignment
                 }
             }
         }
-        static void option83()
+        static void option83(List<Movie>MovieList)
         {
-
+            Movie m = null;
+            int movieno = 0;
+            bool check = false;            
+            Console.Write("Please select a classification [G/PG13/NC16/M18/R21]: ");
+            string picked = Console.ReadLine();
+            for (int i = 0; i<MovieList.Count; i++)
+            {
+                m = MovieList[i];
+                if (m.classification == picked)
+                { check = true; movieno = i; }
+            }
+            if (check == false)
+                Console.WriteLine("Sorry, there is no movie with the classification, " + picked + ".");
+            else
+                Console.WriteLine("The movie with the classification, " + picked + ", is " + m.Title);
         }
-        static void option84()
+        static void option84(List<Movie>MovieList)
         {
+            Option1(MovieList);
+            Console.Write("Please select a movie number: ");
+            int no = Convert.ToInt32(Console.ReadLine());
 
         }      
     }            
