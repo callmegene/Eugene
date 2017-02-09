@@ -15,12 +15,9 @@ namespace OOPAssignment
         static void Main(string[] args)
         {
             List<Movie> MovieList = new List<Movie>();
-            List<string> GenreList = new List<string>();
             List<Screening> ScreeningList = new List<Screening>();
             List<CinemaHall> CinemaList = new List<CinemaHall>();
-            List<string> Ratingcmts = new List<string>();
-            List<double> Rates = new List<double>();
-            initMovie(GenreList, MovieList, Ratingcmts, Rates);
+            initMovie(MovieList);
             initCinemaHall(CinemaList);
             initScreening(ScreeningList, CinemaList, MovieList);
 
@@ -37,12 +34,12 @@ namespace OOPAssignment
                     int no = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("");
                     if (no == 1)
-                    { Console.WriteLine("Option 1. List All Movie\n"); Option1(GenreList, MovieList); }
+                    { Console.WriteLine("Option 1. List All Movie\n"); Option1(MovieList); }
                     else if (no == 2)
-                    { Console.WriteLine("Option 2. Add Movie Screening"); Option2(CinemaList, MovieList, GenreList, ScreeningList); }
+                    { Console.WriteLine("Option 2. Add Movie Screening"); Option2(CinemaList, MovieList, ScreeningList); }
                     else if (no == 3)
                     {
-                        Console.WriteLine("Option 3. List Movie Screening"); option3(GenreList, MovieList, ScreeningList);
+                        Console.WriteLine("Option 3. List Movie Screening"); option3(MovieList, ScreeningList);
                     }
                     else if (no == 4)
                     {
@@ -50,19 +47,19 @@ namespace OOPAssignment
                     }
                     else if (no == 5)
                     {
-                        Console.WriteLine("Option 5. Order Movie Tickets"); option5(GenreList, MovieList, CinemaList, ScreeningList);
+                        Console.WriteLine("Option 5. Order Movie Tickets"); option5(MovieList, CinemaList, ScreeningList);
                     }
                     else if (no == 6)
                     {
-                        Console.WriteLine("Option 6. Add Movie Rating"); option6(MovieList, GenreList);
+                        Console.WriteLine("Option 6. Add Movie Rating"); option6(MovieList);
                     }
                     else if (no == 7)
                     {
-                        Console.WriteLine("Option 7. View Movie Ratings and Comments"); option7(MovieList, GenreList);
+                        Console.WriteLine("Option 7. View Movie Ratings and Comments"); option7(MovieList);
                     }
                     else if (no == 8)
                     {
-                        Console.WriteLine("Option 8. Recommend movie"); option8(GenreList, MovieList, Ratingcmts, Rates);
+                        Console.WriteLine("Option 8. Recommend movie"); option8(MovieList);
                     }
                     else if (no == 0)
                     {
@@ -100,7 +97,7 @@ namespace OOPAssignment
             Console.WriteLine("=================================");
         }
         /**Creating of movie List**/
-        static void initMovie(List<string> GenreList, List<Movie> MovieList, List<string> Ratingcmts, List<double> Rates)
+        static void initMovie(List<Movie> MovieList)
         {
             DateTime date = new DateTime(2016, 12, 29);
             List<string> G1 = new List<string> { "Action", "Adventure" }; Movie m = new Movie("The Great Wall", 103, "NC16", date, G1, new List<string>(), new List<double>()); MovieList.Add(m);
@@ -146,7 +143,7 @@ namespace OOPAssignment
         /**Option 1 method
          * 
          * DIsplay movie list**/
-        static void Option1(List<string> GenreList, List<Movie> MovieList)
+        static void Option1(List<Movie> MovieList)
         {
             Console.WriteLine("{0,-4}{1,-27}{2,-9}{3,-20}{4,-15}{5,-20}", "No", "Title", "Duration", "Genre", "Classification", "Opening Date");
             for (int i = 0; i < MovieList.Count; i++)
@@ -158,7 +155,7 @@ namespace OOPAssignment
         /**Option 2 method
          * 
          * Add a movie screening session**/
-        static void Option2(List<CinemaHall> CinemaList, List<Movie> MovieList, List<string> GenreList, List<Screening> ScreeningList)
+        static void Option2(List<CinemaHall> CinemaList, List<Movie> MovieList, List<Screening> ScreeningList)
         {
 
             CinemaHall c;
@@ -174,7 +171,7 @@ namespace OOPAssignment
             {
                 throw new Exception("\nHall number must be within index");
             }
-            Option1(GenreList, MovieList);
+            Option1(MovieList);
             Console.Write("Select a movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             if (movieno > MovieList.Count || movieno < 0)
@@ -202,9 +199,9 @@ namespace OOPAssignment
         }
         /**Option 3 method
          * List movie screenings**/
-        static void option3(List<string> GenreList, List<Movie> MovieList, List<Screening> ScreeningList)
+        static void option3(List<Movie> MovieList, List<Screening> ScreeningList)
         {
-            Option1(GenreList, MovieList);
+            Option1(MovieList);
             Console.Write("Select a movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             if (movieno > MovieList.Count || movieno < 0)
@@ -261,12 +258,12 @@ namespace OOPAssignment
 
         /**Option 5 method
          * Order movie ticket**/
-        static void option5(List<string> GenreList, List<Movie> MovieList, List<CinemaHall> CinemaHallList, List<Screening> ScreeningList)
+        static void option5(List<Movie> MovieList, List<CinemaHall> CinemaHallList, List<Screening> ScreeningList)
         {
             Order ord = new Order();
             Screening s = null;
             double total = 0;
-            Option1(GenreList, MovieList);
+            Option1(MovieList);
             Console.Write("Select a movie : ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("{0,-6}{1,-12}{2,-18}{3,-24}{4,-30}", "No", "Location", "Hall No", "Date/Time", "Seats Remaining");
@@ -421,22 +418,22 @@ namespace OOPAssignment
         }
         /**Option 6 method
          * Add movie rating**/
-        static void option6(List<Movie> MovieList, List<string> GenreList)
+        static void option6(List<Movie> MovieList)
         {
-            Option1(GenreList, MovieList);
+            Option1(MovieList);
             Console.Write("\nEnter movie number to review the movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Movie m = MovieList[movieno - 1];
             double total = 0;
-            for (int i = 0; i < m.Rates.Count; i++)
+            for (int i = 0; i < m.GetRateList().Count; i++)
             {
-                total += m.Rates[i];
+                total += m.GetRateList()[i];
             }
             double avg = 0;
 
-            if (m.Rates.Count > 0)
+            if (m.GetRateList().Count > 0)
             {
-                avg = total / m.Rates.Count;
+                avg = total / m.GetRateList().Count;
                 Console.WriteLine("The current rating for " + m.Title + " is {0:.00}", avg);
             }
             else
@@ -455,58 +452,116 @@ namespace OOPAssignment
                 else
                     Console.WriteLine("Please enter a valid value between 0 and 5");
             }
-            m.Rates.Add(rate);
+            m.GetRateList().Add(rate);
             Console.Write("Please enter comments about the movie: ");
             string ratingcomment = Console.ReadLine();
-            m.Ratingcmts.Add(ratingcomment);
+            m.GetRatingCmts().Add(ratingcomment);
             Console.WriteLine("Thank you for the submission");
             total = 0;
-            for (int i = 0; i < m.Rates.Count; i++)
+            for (int i = 0; i < m.GetRateList().Count; i++)
             {
-                total += m.Rates[i];
+                total += m.GetRateList()[i];
             }
-            avg = total / m.Rates.Count;
-            Console.WriteLine("The new rating for the movie is {0:.00}", avg);
+            avg = total / m.GetRateList().Count;
+            if (total > 0)
+                Console.WriteLine("The new rating for the movie is {0:.00}", avg);
+            else
+                Console.WriteLine("The new rating for the movie is 0");
         }
         /**Option 7 method
          * View movie ratings and comments**/
-        static void option7(List<Movie> MovieList, List<string> GenreList)
+        static void option7(List<Movie> MovieList)
         {
-            Option1(GenreList, MovieList);
+            Option1(MovieList);
             Console.Write("Select a movie: ");
             int movieno = Convert.ToInt32(Console.ReadLine());
             Movie m = MovieList[movieno - 1];
-            if (m.Rates.Count > 0)
+            if (m.GetRateList().Count > 0)
             {
                 double total = 0;
-                for (int i = 0; i < m.Rates.Count; i++)
+                for (int i = 0; i < m.GetRateList().Count; i++)
                 {
-                    total += m.Rates[i];
+                    total += m.GetRateList()[i];
                 }
-                double avg = (total / m.Rates.Count);
+                double avg = (total / m.GetRateList().Count);
                 Console.WriteLine("\nThe rating for " + m.Title + " is {0:.00}", avg);
-                for (int i = 0; i < m.Ratingcmts.Count; i++)
-                    Console.WriteLine("Comment #" + (i + 1) + " " + m.Ratingcmts[i]);
+                for (int i = 0; i < m.GetRatingCmts().Count; i++)
+                    Console.WriteLine("Comment #" + (i + 1) + " " + m.GetRatingCmts()[i]);
             }
             else
                 Console.WriteLine("\nThere are no ratings or comments for " + m.Title + " yet.");
         }
         /**Option 8 method
          * Recommend a movie(e.g, based on rating, genre, classification, price**/
-        static void option8(List<string> GenreList, List<Movie> MovieList, List<string> Ratingcmts, List<double> Rates)
+        static void option8(List<Movie> MovieList)
         {
             while (true)
             {               
                 Console.WriteLine("\nRecommandations menu\n");
                 Console.WriteLine("[1] Recommand me a movie by ratings.");
-                Console.WriteLine("[2] Recommand me a movie by genre with the highest ratings.");
+                Console.WriteLine("[2] Recommand me a movie by genre.");
                 Console.WriteLine("[3] Recommand me a movie by classification.");
                 Console.WriteLine("[4] Recommand me a movie by location");
+                Console.WriteLine("[5] Take a look at people's comments on the movie");
                 Console.WriteLine("[0] Exit recommandations menu");
-                Console.WriteLine("\nChoose an option");
+                Console.Write("\nChoose an option: ");
                 int no = Convert.ToInt32(Console.ReadLine());
-                
+                if (no == 1)
+                { Console.WriteLine("\nRecommand a movie by rating selected"); option81(MovieList); }
+                else if (no == 2)
+                { Console.WriteLine("\nRecommand a movie by genre with the higher rating"); option82(MovieList); }
             }
         }
+        static void option81(List<Movie>MovieList)
+        {
+            double average;
+            double highest = 0;
+            int value = -1;
+            for (int i = 0; i < MovieList.Count; i++)
+            {
+                Movie m = MovieList[i];
+                average = (m.GetRateList().Sum() / m.GetRateList().Count);
+                if (average > highest)
+                {
+                    highest = average;
+                    value = i;
+                }               
+            }
+            if (value == -1)
+                Console.WriteLine("Sorry, none of the movie has a rating yet");
+            else
+                Console.WriteLine("The movie with the highest rating is " + MovieList[value].Title + " with a rating of " +highest+"." );                
+        }
+        static void option82(List<Movie> MovieList)
+        {
+            Movie m;            
+            Console.Write("Please select a genre [Action/Comedy/Adventure/Fantasy/Thriller]: ");
+            string picked = Console.ReadLine();
+            Console.WriteLine("The movie with the genre, " + picked + ", is/are");
+            for (int i = 0;i<MovieList.Count;i++)
+            {
+                bool inside = false;
+                m = MovieList[i];
+                if (inside == false)
+                {
+                    for (int x = 0; x < m.GetGenreList().Count; x++)
+                    {
+                        if (m.GetGenreList()[x] == picked)
+                        {
+                            inside = true;                            
+                            Console.WriteLine("- " + m.Title);                            
+                        }
+                    }
+                }
+            }
+        }
+        static void option83()
+        {
+
+        }
+        static void option84()
+        {
+
+        }      
     }            
 }
